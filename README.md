@@ -10,3 +10,11 @@ source activate flask
 cd flask api
 python app.py
 ```
+
+### React App
+On a separate app,
+
+```
+npm install
+npm start
+```
