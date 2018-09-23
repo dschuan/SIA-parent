@@ -1,16 +1,35 @@
 import React, {Component} from 'react';
+import {Cell, PieChart, Pie, Label, Legend} from 'recharts';
 
+import './mainstats.css';
 class MainStats extends Component {
   constructor(props) {
     super(props);
   }
   render() {
     const {empty, full, half} = this.props;
+    const data = [{name: "Empty", value: empty}, {name: "Half-Eaten", value: half}, {name: "Not Eaten", value:full}]
+    const COLORS = ['#3DCC91', '#FFB366', '#FF7373'];
     return (
       <div>
-        <p>Empty: {empty}</p>
-        <p>Full: {full}</p>
-        <p>Half-eaten: {half}</p>
+        <PieChart width={400} height={400}>
+          <Pie data={data}
+          dataKey="value"
+          nameKey="name"
+          fill="#8884d8"
+          paddingAngle={5}
+          innerRadius={100}
+          outerRadius={150}
+          legendType="square"
+          label
+          >
+            {data.map((entry, index) => (
+              <Cell key={index} fill={COLORS[index % COLORS.length]}  />
+            ))}
+            <Label value="Overall Statistics" offset={0} position="center" />
+          </Pie>
+          <Legend />
+        </PieChart>
       </div>
     )
   }
