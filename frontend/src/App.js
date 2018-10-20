@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
-import './App.css';
 
 import Main from './pages/Main';
+import FlightMain from './pages/FlightMain';
+import NoMatch from './pages/NoMatch';
 import Sidebar from './components/Sidebar';
+import NavBar from './components/NavBar';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Placeholder Label</h1>
-        </header>
+        <NavBar />
         <div className="Main">
-          <Sidebar />
           <div className="Routes">
             <Switch>
               <Route exact path = "/" component={Main} />
+              <Route path = "/flight" component={FlightMain}/>
+              <Route component={NoMatch} />
             </Switch>
           </div>
         </div>

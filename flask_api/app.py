@@ -10,6 +10,7 @@ mongo = client.python_web
 app = Flask(__name__)
 CORS(app)
 
+"""
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     if request.method == 'OPTIONS':
@@ -20,7 +21,7 @@ def add_cors_headers(response):
     return response
 
 app.after_request(add_cors_headers)
-
+"""
 
 @app.route('/')
 def index():
