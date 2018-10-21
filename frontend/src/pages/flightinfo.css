@@ -1,0 +1,20 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: inherit;
+  justify-content: space-around;
+  margin: auto;
+}
+
+.info > p {
+  font-family: 'Open Sans', sans-serif;
+  width: 25%;
+  margin: 10px auto;
+
+}
+
+.info .btn {
+  width: 25%;
+  margin: 0 auto;
+}

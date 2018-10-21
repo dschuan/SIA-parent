@@ -1,16 +1,13 @@
 import React, {Component} from 'react'
 import {Button} from 'react-bootstrap'
-import ReactDropzone from 'react-dropzone'
-import request from 'superagent'
+
+import Upload from '../components/Upload';
+import './flightinfo.css';
 
 class FlightInfo extends Component {
   constructor(props) {
     super(props)
-    this.state =
-    { showDropzone: false,
-      totalNumber: '',
-      uploaded: false
-    }
+    this.state = { showDropzone: false,}
     this.showDrop = this.showDrop.bind(this)
     this.hideDrop = this.hideDrop.bind(this)
 
@@ -49,13 +46,7 @@ class FlightInfo extends Component {
     if (this.state.showDropzone) {
       return (
         <div>
-          <ReactDropzone onDrop={this.onDrop}>
-            Drop your images here
-          </ReactDropzone>
-          <div>
-            <h4> Images Uploaded: </h4>
-
-          </div>
+          <Upload params={this.props.match.params}/>
           <Button bsSize='large' onClick={this.hideDrop}> Cancel </Button>
         </div>
       )
@@ -64,9 +55,10 @@ class FlightInfo extends Component {
 
   }
   render() {
+    console.log(this.props)
     return (
-      <div>
-        <p>Info here </p>
+      <div className='info'>
+        <p>Flight Info</p>
         <Button bsSize='large' onClick={this.showDrop}>Upload Photos</Button>
         {this.renderDropZone()}
       </div>
