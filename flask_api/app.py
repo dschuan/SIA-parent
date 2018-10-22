@@ -1,25 +1,13 @@
 #!flask/bin/python
 
 from flask import Flask, jsonify, request, Response
+import json
 from flask_cors import CORS
-from pymongo import MongoClient
-
-
-
+from PIL import Image
+import time
+import classify
 app = Flask(__name__)
 CORS(app)
-
-
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    if request.method == 'OPTIONS':
-        response.headers['Access-Control-Allow-Methods'] = 'DELETE, GET, POST, PUT'
-        headers = request.headers.get('Access-Control-Request-Headers')
-        if headers:
-            response.headers['Access-Control-Allow-Headers'] = headers
-    return response
-
-app.after_request(add_cors_headers)
 
 
 @app.route('/')
@@ -42,10 +30,22 @@ def retrieveFoodInfo(flight_num):
 def postImage(plane_id):
     print(plane_id)
     names = list(request.files.keys())
+    filesToProcess = []
     for name in names:
 
-        print(request.files[name])
-    return "ok"
+        fileImg  = request.files[name]
+        filename = request.files[name].filename
+        print(str(fileImg))
+        im = Image.open(fileImg)
+        im.show()
+        nameSaved = './photoDump/' + str(time.time()).replace('.', '')[-3:] + filename
+        print(nameSaved)
+        im.save(nameSaved)
+        filesToProcess.append(nameSaved)
+
+    results = classify.classifyFromPathList(filesToProcess)
+    print(results)
+    return json.dumps(results)
 
 if __name__ == '__main__':
     app.run(debug=True)

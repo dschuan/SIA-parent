@@ -49,7 +49,7 @@ def classifyFromPathList(filePathList):
                     result["prediction"] = human_string
                     isMax = False
 
-                result[human_string] = score
+                result[human_string] = str(score)
 
             resultList.append(result)
 
