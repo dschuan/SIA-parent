@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CartesianGrid, ResponsiveContainer, LineChart, XAxis, YAxis, Legend, Line, Tooltip} from 'recharts';
+import { CartesianGrid, ResponsiveContainer , LineChart, XAxis, YAxis, Legend, Line, Tooltip} from 'recharts';
 
 import './stattrend.css'
 
@@ -16,7 +16,10 @@ class StatTrend extends Component {
       {year: '17', empty: 34, half: 43, full: 21},
     ];
     return (
-          <LineChart height={500} width={500} data={data}>
+        <div className="parent">
+        <h4> Trend of Food Wastage </h4>
+        <ResponsiveContainer width="100%" aspect={3}>
+          <LineChart data={data}>
             <XAxis dataKey="year" />
             <YAxis />
             <CartesianGrid strokeDasharray="3 3"/>
@@ -26,6 +29,8 @@ class StatTrend extends Component {
             <Line type="monotone" dataKey="half" stroke="#82ca9d" />
             <Line type="monotone" dataKey="full" stroke="#FF7373" />
           </LineChart>
+        </ResponsiveContainer>
+        </div>
 
     )
   }

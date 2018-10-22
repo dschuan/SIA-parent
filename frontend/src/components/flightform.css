@@ -1,0 +1,12 @@
+.flight-par {
+  width: inherit;
+  margin: auto;
+  justify-content: center;
+}
+.flight-par .flight-form {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin: auto;
+  align-content: center;
+}

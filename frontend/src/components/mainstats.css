@@ -3,3 +3,9 @@ tspan {
   font-weight: 500;
   font-family: 'Open Sans', sans-serif;
 }
+
+.recharts-responsive-container {
+  background-color: white;
+  margin: 2% 5%;
+  box-shadow: 2px 2px 2px #888888;
+}

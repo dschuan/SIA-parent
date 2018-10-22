@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import {PageHeader} from 'react-bootstrap';
 
 import MainStats from '../components/MainStats';
+import StatTrend from '../components/StatTrend';
+import FoodTypeStat from '../components/FoodTypeStat';
+
+import './main.css';
 
 class Main extends Component {
   constructor(props) {
@@ -9,28 +14,20 @@ class Main extends Component {
       res:''
     };
   }
-  componentDidMount() {
-    fetch('http://localhost:5000/get-param1/1', {
-      method: 'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-    })
-    .then((response) => {
-      return response.json();
-    }).then ((res) => {
-        this.setState({res})
-    })
-  }
+
   render(){
-    console.log(this.state.res);
-    const {empty, full, half} = this.state.res
     return(
-      <div>
-        <h2>Hi</h2>
-        <p> Dashboard here </p>
-        <MainStats empty={empty} full={full} half={half}/>
+      <div className="dashboard">
+        <div className="row">
+          <PageHeader>Overall Food Statistics</PageHeader>
+        </div>
+        <div className="row">
+          <MainStats empty={10} full={15} half={20}/>
+          <FoodTypeStat />
+        </div>
+        <div className="row">
+          <StatTrend />
+        </div>
       </div>
     )
   }
