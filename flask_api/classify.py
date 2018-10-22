@@ -37,6 +37,8 @@ def classifyFromPathList(filePathList):
             top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
 
             result = {}
+            filename = filePath.split('/')[-1]
+            result['filename'] = filename
             isMax = True
             for node_id in top_k:
 
@@ -56,7 +58,7 @@ def classifyFromPathList(filePathList):
 
 
 if __name__ == '__main__':
-    test = [r"C:\Users\jorda\Desktop\siapp\prototype\SIA-parent\flask api\testPhotos\empty.jpg",r"C:\Users\jorda\Desktop\siapp\prototype\SIA-parent\flask api\testPhotos\full.jpg",r"C:\Users\jorda\Desktop\siapp\prototype\SIA-parent\flask api\testPhotos\half.jpg"]
+    test = [r"./testPhotos/empty.jpg",r"./testPhotos/full.jpg",r"./testPhotos/half.jpg"]
     result = classifyFromPathList(test)
 
     print(result)

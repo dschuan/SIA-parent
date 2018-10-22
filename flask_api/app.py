@@ -1,11 +1,10 @@
 #!flask/bin/python
-
-from flask import Flask,jsonify
+from flask import Flask, jsonify, session, request
+from bson.objectid import ObjectId
 from flask_cors import CORS
 from pymongo import MongoClient
 
-client = MongoClient()
-mongo = client.python_web
+
 
 app = Flask(__name__)
 CORS(app)
@@ -26,11 +25,17 @@ app.after_request(add_cors_headers)
 def index():
     return "Hello, World!"
 
-@app.route('/get-param1/<int:plane_id>', methods=['POST'])
-def retrieveFoodInfo(plane_id):
-    if plane_id != 1:
-        abort(404)
-    return(jsonify({"empty": 15, "half": 15, "full": 70}))
+@app.route('/retrieveFoodInfo/<flight_num>', methods=['GET'])
+def retrieveFoodInfo(flight_num):
+
+    flight = mongo.flights.find_one({'flight_num':flight_num})
+    print(flight)
+
+    if flight is None:
+        return "Unsuccessful, food information for your flight number does not exist in our database."
+    else:
+        return(jsonify(plane))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
