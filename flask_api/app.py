@@ -1,6 +1,6 @@
 #!flask/bin/python
-from flask import Flask, jsonify, session, request
-from bson.objectid import ObjectId
+
+from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 from pymongo import MongoClient
 
@@ -8,6 +8,7 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 CORS(app)
+
 
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
@@ -36,6 +37,15 @@ def retrieveFoodInfo(flight_num):
     else:
         return(jsonify(plane))
 
+
+@app.route('/post-image/<plane_id>', methods=['POST'])
+def postImage(plane_id):
+    print(plane_id)
+    names = list(request.files.keys())
+    for name in names:
+
+        print(request.files[name])
+    return "ok"
 
 if __name__ == '__main__':
     app.run(debug=True)

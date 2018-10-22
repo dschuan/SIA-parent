@@ -11,7 +11,7 @@ class Main extends Component {
   }
   componentDidMount() {
     fetch('http://localhost:5000/get-param1/1', {
-      method: 'get',
+      method: 'post',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',

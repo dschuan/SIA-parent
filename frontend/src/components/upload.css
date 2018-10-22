@@ -1,0 +1,30 @@
+.upload {
+  margin-top: 20px;
+}
+
+.upload .dropzone {
+  width: 100%;
+  height: 30vh;
+  background-color:	#f1faff;
+  border: 2px dashed #3c5fd6;
+  border-radius: 10px;
+
+}
+
+.upload .dropzone-active {
+  width: 100%;
+  height: 30vh;
+  background-color:	#bfd0e6;
+  border: 2px dashed #3c5fd6;
+  border-radius: 10px;
+}
+
+.upload .dropzone > h3 {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  width: 25%;
+  line-height: 10vh;
+  text-align: center;
+  padding-top: 6%;
+  margin: auto;
+}
