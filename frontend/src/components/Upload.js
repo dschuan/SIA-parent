@@ -30,7 +30,7 @@ class Upload extends Component {
     for (let i = 0; i < files.length; i++) {
       form.append(files[i].name, files[i])
     };
-    const url = `http://localhost:5000/post-image/${this.props.match.params.id}`
+    const url = `http://localhost:8001/post-image/${this.props.params.id}`
     this.setState({loadMessage:'Sending images over...'})
     fetch(url, {
       method: 'POST',
@@ -41,7 +41,7 @@ class Upload extends Component {
       this.setState({loadMessage:'Success', loading: false})
       console.log(res)
       setTimeout(() => {
-        this.setState({refresh:true})
+        window.location.reload()
       }, 500)
     })
 
@@ -81,7 +81,6 @@ class Upload extends Component {
       <div className='upload'>
         {this.state.showStatus ? this.renderStatus() : (<div></div>)}
         {this.renderDropzone()}
-        {this.state.refresh ? <Redirect to={this.props.match.url} />} : <div />
       </div>
     )
   }
