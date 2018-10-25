@@ -1,18 +1,28 @@
 import React, {Component} from 'react'
 import {Button} from 'react-bootstrap'
+import axios from 'axios'
 
+import Results from '../components/Results';
 import Upload from '../components/Upload';
 import './flightinfo.css';
+
+const url = 'http://localhost:8001/updateImages';
 
 class FlightInfo extends Component {
   constructor(props) {
     super(props)
-    this.state = { showDropzone: false, results=[]}
+    this.state = { showDropzone: false, results:[], loading: true}
     this.showDrop = this.showDrop.bind(this)
     this.hideDrop = this.hideDrop.bind(this)
   }
   componentDidMount() {
-    this.setState({results: getResults()})
+    axios.get('http://localhost:8001/updateImages')
+    .then((response) => {
+      this.setState({results: response.data, loading: false})
+    })
+    .catch( (error) => {
+      console.log(error);
+    });
     //fetch result
   }
   showDrop() {
@@ -40,6 +50,7 @@ class FlightInfo extends Component {
     return (
       <div className='info'>
         <p>Flight Info</p>
+        {this.state.loading ? <p>Loading </p> : <Results data={this.state.results} />}
         <Button bsSize='large' onClick={this.showDrop}>Upload Photos</Button>
         {this.renderDropZone()}
       </div>

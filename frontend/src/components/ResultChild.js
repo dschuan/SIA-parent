@@ -2,8 +2,10 @@ import React from 'react';
 
 import './resultchild.css';
 
+const url = 'http://localhost:8001'
 const ResultChild = (props) => {
   const {preview, filename, prediction} = props;
+  console.log(preview);
   return (
     <div className="parent">
       <div className="child">
@@ -15,7 +17,7 @@ const ResultChild = (props) => {
         <span>{prediction}</span>
       </div>
       <div className="img-par">
-        <img src={preview} alt={filename} />
+        <img src={url+preview} alt={filename} />
       </div>
     </div>
   )
