@@ -29,7 +29,7 @@ def postImage(plane_id):
         filename = request.files[name].filename
         print('typeis ********************',type(fileImg))
         im = Image.open(fileImg)
-        nameSaved = './photoDump/' + str(time.time()).replace('.', '')[-3:] + filename
+        nameSaved = './static/' + str(time.time()).replace('.', '')[-3:] + filename
         print(nameSaved)
         im.save(nameSaved)
         filesToProcess.append(nameSaved)
