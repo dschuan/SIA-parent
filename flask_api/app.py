@@ -35,7 +35,12 @@ def postImage(plane_id):
         filesToProcess.append(nameSaved)
 
     results = classify.classifyFromPathList(filesToProcess)
-    print(results)
+
+    with open('db.json') as f:
+        allResults = json.load(f)
+    allResults.extend(results)
+    with open('db.json', 'w') as fp:
+        json.dump(allResults, fp)
     return json.dumps(results)
 
 
