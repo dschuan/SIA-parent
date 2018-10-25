@@ -52,7 +52,7 @@ def updateImages():
             image = bytearray(b)
         results = classify.classifyFromPathList([filename])
         results[0]['image'] = str(image)
-        allResults.append(results)
+        allResults.append(results[0])
 
     return json.dumps(results)
 
