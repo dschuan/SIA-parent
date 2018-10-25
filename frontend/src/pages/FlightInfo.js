@@ -7,33 +7,14 @@ import './flightinfo.css';
 class FlightInfo extends Component {
   constructor(props) {
     super(props)
-    this.state = { showDropzone: false,}
+    this.state = { showDropzone: false, results=[]}
     this.showDrop = this.showDrop.bind(this)
     this.hideDrop = this.hideDrop.bind(this)
-
   }
-
-  onDrop = (files) => {
-    // POST to a test endpoint for demo purposes
-
-    let form = new FormData()
-    console.log('dropping ' + files.length + 'files')
-
-    for (let i = 0; i < files.length; i++) {
-      form.append(files[i].name, files[i])
-    };
-    const url = `http://localhost:5000/post-image/${this.props.match.params.id}`
-    console.log(url)
-    fetch(url, {
-      method: 'POST',
-      body: form,
-      mode: 'no-cors'
-    }).then(res => {
-      console.log(res.status);
-      return res.blob();
-    })
+  componentDidMount() {
+    this.setState({results: getResults()})
+    //fetch result
   }
-
   showDrop() {
     this.setState({showDropzone: true})
     console.log(this.state.showDropzone)
@@ -46,7 +27,7 @@ class FlightInfo extends Component {
     if (this.state.showDropzone) {
       return (
         <div>
-          <Upload params={this.props.match.params}/>
+          <Upload params={this.props.match}/>
           <Button bsSize='large' onClick={this.hideDrop}> Cancel </Button>
         </div>
       )

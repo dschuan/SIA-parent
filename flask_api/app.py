@@ -37,7 +37,6 @@ def postImage(plane_id):
         filename = request.files[name].filename
         print(str(fileImg))
         im = Image.open(fileImg)
-        im.show()
         nameSaved = './photoDump/' + str(time.time()).replace('.', '')[-3:] + filename
         print(nameSaved)
         im.save(nameSaved)
