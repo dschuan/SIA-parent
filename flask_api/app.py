@@ -14,7 +14,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return "Hello, World!"
+    return "<img src='/static/044motion.jpg' />"
 
 
 @app.route('/post-image/<plane_id>', methods=['POST'])
@@ -42,36 +42,46 @@ def postImage(plane_id):
 from werkzeug.datastructures import FileStorage
 @app.route('/updateImages', methods=['GET'])
 def updateImages():
-    allResults = []
-    photoDump = './photoDump'
-    for name in listdir(photoDump):
+    with open('db.json') as f:
+        allResults = json.load(f)
+    # photoDump = './photoDump'
+    # for name in listdir(photoDump):
+    #
+    #     filename = photoDump + '/' + name
+    #     with open(filename, "rb") as f:
+    #         b = f.read()
+    #         image = bytearray(b)
+    #     results = classify.classifyFromPathList([filename])
+    #     results[0]['image'] = str(image)
+    #     allResults.append(results[0])
 
-        filename = photoDump + '/' + name
-        with open(filename, "rb") as f:
-            b = f.read()
-            image = bytearray(b)
-        results = classify.classifyFromPathList([filename])
-        results[0]['image'] = str(image)
-        allResults.append(results[0])
-
-    return json.dumps(results)
+    return json.dumps(allResults)
 
 import io
 @app.route('/sendImage', methods=['POST'])
 def get_image():
     if request.method =='POST':
-        print('this is***********************',list(request.files.keys()))
+        with open('db.json') as f:
+            allResults = json.load(f)
         names = list(request.files.keys())
         for name in names:
+            #first receive the file from the raspi
             print('received')
             fileImg  = request.files[name].read()
             filename = request.files[name].filename
             print(type(fileImg))
             im = Image.open(io.BytesIO(fileImg))
-            nameSaved = './photoDump/' + str(time.time()).replace('.', '')[-3:] + filename
-            print(nameSaved)
+            nameSaved = './static/' + str(time.time()).replace('.', '')[-3:] + filename
             im.save(nameSaved)
 
+            #host the file in static folder
+            url = '/static/' + str(time.time()).replace('.', '')[-3:] + filename
+            #classify the results
+            results = classify.classifyFromPathList([nameSaved])
+            results[0]['image'] = url
+            allResults.append(results[0])
+        with open('db.json', 'w') as fp:
+            json.dump(allResults, fp)
     return 'success'
 
 
