@@ -22,7 +22,9 @@ def postImage(plane_id):
     print(plane_id)
     names = list(request.files.keys())
 
-    filesToProcess = []
+    with open('db.json') as f:
+        allResults = json.load(f)
+
     for name in names:
 
         fileImg  = request.files[name]
@@ -32,16 +34,16 @@ def postImage(plane_id):
         nameSaved = './static/' + str(time.time()).replace('.', '')[-3:] + filename
         print(nameSaved)
         im.save(nameSaved)
-        filesToProcess.append(nameSaved)
 
-    results = classify.classifyFromPathList(filesToProcess)
+        url = nameSaved[1:]
+        #classify the results
+        results = classify.classifyFromPathList([nameSaved])
+        results[0]['image'] = url
+        allResults.append(results[0])
 
-    with open('db.json') as f:
-        allResults = json.load(f)
-    allResults.extend(results)
     with open('db.json', 'w') as fp:
         json.dump(allResults, fp)
-    return json.dumps(results)
+    return json.dumps(allResults)
 
 
 from werkzeug.datastructures import FileStorage
@@ -80,7 +82,7 @@ def get_image():
             im.save(nameSaved)
 
             #host the file in static folder
-            url = '/static/' + str(time.time()).replace('.', '')[-3:] + filename
+            url = nameSaved[1:]
             #classify the results
             results = classify.classifyFromPathList([nameSaved])
             results[0]['image'] = url
