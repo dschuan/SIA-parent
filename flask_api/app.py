@@ -56,23 +56,20 @@ def updateImages():
 
     return json.dumps(results)
 
-
-
-from io import BytesIO
+import io
 @app.route('/sendImage', methods=['POST'])
 def get_image():
     if request.method =='POST':
-        print(list(request.files.keys()))
+        print('this is***********************',list(request.files.keys()))
         names = list(request.files.keys())
         for name in names:
             print('received')
-            fileImg  = request.files[name].stream.read()
+            fileImg  = request.files[name].read()
             filename = request.files[name].filename
             print(type(fileImg))
-            im = Image.open(BytesIO(fileImg))
+            im = Image.open(io.BytesIO(fileImg))
             nameSaved = './photoDump/' + str(time.time()).replace('.', '')[-3:] + filename
             print(nameSaved)
-            im.show()
             im.save(nameSaved)
 
     return 'success'
